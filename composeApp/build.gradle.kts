@@ -1,21 +1,22 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
-    
+
+/*
     listOf(
+        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->
@@ -24,25 +25,69 @@ kotlin {
             isStatic = true
         }
     }
-    
+*/
+
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.activity.compose)
-        }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
             implementation(libs.compose.ui)
+            implementation(libs.compose.material.icons.extended)
             implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.compose.navigation)
+
+            // Lifecycle & ViewModel
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+
+            // Networking
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.logging)
+            implementation(libs.ktor.client.auth)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            // DI
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            // Storage
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.no.arg)
+
+            // Serialization
+            implementation(libs.kotlinx.serialization.json)
+
+            // Coroutines
+            implementation(libs.kotlinx.coroutines.core)
+
+            // Datetime
+            implementation(libs.kotlinx.datetime)
+
+            // Images
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
+            implementation(libs.sqldelight.android.driver)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.security.crypto)
+            implementation(libs.razorpay.checkout)
         }
+
+/*
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.native.driver)
+        }
+*/
     }
 }
 
@@ -73,7 +118,15 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("ParentAppDatabase") {
+            packageName.set("com.edmik.parentapp.db")
+        }
+    }
+}
+
 dependencies {
-    debugImplementation(libs.compose.uiTooling)
+    debugImplementation(libs.compose.ui.tooling)
 }
 

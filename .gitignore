@@ -1,5 +1,6 @@
 *.iml
 .kotlin
+.vscode
 .gradle
 **/build/
 xcuserdata
@@ -17,3 +18,4 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+figma/

@@ -1,0 +1,13 @@
+CREATE TABLE Student (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    batch TEXT NOT NULL,
+    profilePhotoUrl TEXT
+);
+
+insertStudent:
+INSERT OR REPLACE INTO Student(id, name, batch, profilePhotoUrl)
+VALUES (?, ?, ?, ?);
+
+selectAllStudents:
+SELECT * FROM Student;
