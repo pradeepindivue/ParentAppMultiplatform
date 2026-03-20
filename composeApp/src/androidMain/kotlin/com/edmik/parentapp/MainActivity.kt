@@ -9,19 +9,12 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import com.edmik.parentapp.ui.theme.ParentAppTheme
 
-import com.edmik.parentapp.di.appContext
-import com.edmik.parentapp.di.initKoin
-import org.koin.android.ext.koin.androidContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        appContext = applicationContext
-        initKoin {
-            androidContext(this@MainActivity)
-        }
-
+        enableEdgeToEdge()
         setContent {
             ParentAppTheme {
                 App()
