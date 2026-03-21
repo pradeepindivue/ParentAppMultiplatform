@@ -1,9 +1,10 @@
 package com.edmik.parentapp.di
 
-import com.edmik.parentapp.data.local.TokenManager
+import com.edmik.parentapp.data.local.database.TokenManager
 import com.russhwolf.settings.Settings
-import com.edmik.parentapp.ui.login.LoginViewModel
-import com.edmik.parentapp.ui.login.ForgotPasswordViewModel
+import com.edmik.parentapp.presentation.screens.login.LoginViewModel
+import com.edmik.parentapp.presentation.screens.forgot_password.ForgotPasswordViewModel
+import com.edmik.parentapp.presentation.app.AppStateManager
 import org.koin.compose.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,5 +16,5 @@ val AppModule = module {
     single { AppStateManager() }
     
     viewModel { LoginViewModel(get(), get(), get()) }
-    viewModel { ForgotPasswordViewModel() }
+    viewModel { ForgotPasswordViewModel(get()) }
 }

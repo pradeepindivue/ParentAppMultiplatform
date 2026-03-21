@@ -10,6 +10,8 @@ fun initKoin(appDeclaration: KoinApplication.() -> Unit = {}) =
             AppModule,
             NetworkModule,
             RepositoryModule,
+            UseCaseModule,
             DatabaseModule
         )
     }
+

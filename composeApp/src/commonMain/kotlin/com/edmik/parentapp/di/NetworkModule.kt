@@ -1,14 +1,11 @@
 package com.edmik.parentapp.di
 
-import com.edmik.parentapp.data.api.ApiClient
-import com.edmik.parentapp.data.api.AuthService
+import com.edmik.parentapp.data.remote.api.HttpClientFactory
+import com.edmik.parentapp.data.remote.api.AuthApiService
 import org.koin.dsl.module
 
 val NetworkModule = module {
-    single {
-        ApiClient(get(), isDebug = true)
-    }
-    single {
-        AuthService(get())
-    }
+    single { HttpClientFactory(get(), isDebug = true) }
+    single { AuthApiService(get()) }
 }
+
